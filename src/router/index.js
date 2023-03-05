@@ -9,8 +9,15 @@ const routes = [
   },
   {
     path: "/login",
-    name: "home",
+    name: "login",
+    meta: {layout: 'empty'},
     component: () => import("@/views/LoginPage.vue"),
+  },
+  {
+    path: "/categories",
+    name: "categories",
+    meta: {layout: 'main'},
+    component: () => import("@/views/CategoryPage.vue"),
   },
 ];
 

@@ -3,12 +3,12 @@
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
       <div class="input-field">
-        <input id="email" type="text" class="validate" />
+        <input id="email" type="text" class="validate" autocomplete="off"/>
         <label for="email">Email</label>
         <small class="helper-text invalid">Email</small>
       </div>
       <div class="input-field">
-        <input id="password" type="password" class="validate" />
+        <input id="password" type="password" class="validate" autocomplete="off"/>
         <label for="password">Пароль</label>
         <small class="helper-text invalid">Password</small>
       </div>
