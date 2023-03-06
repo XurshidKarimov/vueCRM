@@ -6,7 +6,7 @@
 
 <script>
 import EmptyLayout from "@/layout/EmptyLayout.vue";
-import MainLayout from "./layout/MainLayout.vue";
+import MainLayout from "@/layout/MainLayout.vue";
 
 export default {
   components: {
