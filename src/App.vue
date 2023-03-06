@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import EmptyLayout from "@/layout/EmptyLayout.vue";
-import MainLayout from "@/layout/MainLayout.vue";
+import EmptyLayout from "@/layout/EmptyLayout";
+import MainLayout from "@/layout/MainLayout";
 
 export default {
   components: {
