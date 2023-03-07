@@ -10,6 +10,8 @@
         :class="{invalid: (v$.email.$dirty && !v$.email.required) || (v$.email.$dirty && !v$.email.email)}" 
         autocomplete="off"/>
         <label for="email">Email</label>
+        <small v-if="v$.email.$dirty && !v$.email.required" class="helper-text invalid">Введите почту</small>
+        <small v-else-if="v$.email.$dirty && !v$.email.email" class="helper-text invalid">Введите корректную почту</small>
       </div>
       <div class="input-field">
         <input 
@@ -18,10 +20,9 @@
         v-model.trim="state.password"
         autocomplete="off"/>
         <label for="password">Пароль</label>
-        <small class="helper-text">Пароль должен содержать минимум 6 символов</small>
-        <small 
-        v-if="v$.password.$error && state.password || v$.email.$error && state.email" 
-        class="helper-text invalid">Логин или пароль неправильно. </small>
+        <small v-if="v$.password.$dirty && !v$.password.required" class="helper-text invalid">Введите парол</small>
+        <small v-else-if="v$.password.$dirty && !v$.password.minLength" 
+        class="helper-text invalid">Пароль должен содержать минимум {{ v$.password.minLength.$params.min }} символов</small>
       </div>
     </div>
     <div class="card-action">
@@ -47,6 +48,10 @@ import { required, email, minLength } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
 
   export default{
+
+    data: () => ({
+      
+    }),
     setup(){
       const state = reactive({
         email: '',
@@ -56,7 +61,7 @@ import { computed, reactive } from 'vue'
       const rules = computed(() => {
         return {
           email: { email, required, },
-          password: {required, minLength: minLength(6) }
+          password: {required, minLength: minLength(8) }
         }   
       })
 
