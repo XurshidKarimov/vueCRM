@@ -20,9 +20,6 @@
         ]
       }
     },
-    mounted(){
-      console.log(this.value);
-    }
   }
 
 
