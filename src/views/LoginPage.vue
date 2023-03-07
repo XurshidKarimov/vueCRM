@@ -76,6 +76,12 @@ import { computed, reactive } from 'vue'
           this.v$.email.$touch();
           return;
         }
+
+        const formData = {
+          email: this.email,
+          password: this.password,
+        }
+
         this.$router.push('/');
       }
     }
