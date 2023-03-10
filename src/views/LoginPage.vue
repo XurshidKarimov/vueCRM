@@ -2,22 +2,22 @@
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
       <span class="card-title">Логин</span>
-      <div class="input-field">
+      <div class="input-field ">
         <input 
         id="email" 
         type="text"
         v-model.trim="state.email"
-        :class="{invalid: (v$.email.$dirty && !v$.email.required) || (v$.email.$dirty && !v$.email.email)}" 
+        :class="{invalid: (v$.email.$dirty)}" 
         autocomplete="off"/>
         <label for="email">Email</label>
-        <small v-if="v$.email.$dirty && !v$.email.required" class="helper-text invalid">Введите почту</small>
-        <small v-else-if="v$.email.$dirty && !v$.email.email" class="helper-text invalid">Введите корректную почту</small>
+        <small v-if="v$.email.required.$invalid" class="helper-text invalid">Введите почту</small>
+        <small v-else-if="v$.email.email.$invalid" class="helper-text invalid">Введите корректную почту</small>
       </div>
       <div class="input-field">
         <input 
         id="password" 
         type="password" 
-        v-model.trim="state.password"
+        v-model.trim="this.state.password"
         autocomplete="off"/>
         <label for="password">Пароль</label>
         <small v-if="v$.password.$dirty && !v$.password.required" class="helper-text invalid">Введите парол</small>
@@ -47,10 +47,17 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
 
+  // const validations = {
+  //   email: {
+  //     required: helpers.withMessage("This field cannot be empty", required),
+  //   }
+  // }
+
+
   export default{
 
     data: () => ({
-      
+      error: '',
     }),
     setup(){
       const state = reactive({
@@ -73,14 +80,19 @@ import { computed, reactive } from 'vue'
      async submitHandler(){
         const result = await this.v$.$validate();
         if(!result){
-          this.v$.email.$touch();
+          if(this.v$.email.required.$invalid){
+            console.log("Email required.")
+          }
+          else if(this.v$.email.email.$invalid){
+            console.log("Incorrect email.")
+          } 
           return;
         }
 
-        const formData = {
-          email: this.email,
-          password: this.password,
-        }
+        // const formData = {
+        //   email: this.email,
+        //   password: this.password,
+        // }
 
         this.$router.push('/');
       }
@@ -89,3 +101,6 @@ import { computed, reactive } from 'vue'
 
 
 </script>
+
+<style scoped>
+</style>
