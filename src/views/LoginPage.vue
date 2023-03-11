@@ -46,12 +46,7 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
-
-  // const validations = {
-  //   email: {
-  //     required: helpers.withMessage("This field cannot be empty", required),
-  //   }
-  // }
+import messages from '@/utils/messages'
 
 
   export default{
@@ -111,6 +106,12 @@ import { computed, reactive } from 'vue'
         return this.passwordError;
       },
 
+    },
+    inject: ['message', 'error'],
+    mounted(){
+      if(messages[this.$route.query.message]){
+        this.message(messages[this.$route.query.message]);
+      }
     }
   }
 

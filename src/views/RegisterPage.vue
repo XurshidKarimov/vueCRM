@@ -70,7 +70,6 @@
   import { required, email, minLength} from '@vuelidate/validators'
   import { computed, reactive } from 'vue'
 
-
   export default{
     
     data: () => ({
