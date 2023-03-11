@@ -97,8 +97,8 @@ import { computed, reactive } from 'vue'
         }
         this.$router.push('/');
         // const formData = {
-        //   email: this.email,
-        //   password: this.password,
+          // email: this.state.email,
+          // password: this.state.password,
         // }
 
       }
