@@ -7,22 +7,22 @@
         id="email" 
         type="text"
         v-model.trim="state.email"
-        :class="{invalid: (v$.email.$dirty)}" 
+        :class="{invalid: this.emailError}"
+        @input="this.emailError = ''"
         autocomplete="off"/>
         <label for="email">Email</label>
-        <small v-if="v$.email.required.$invalid" class="helper-text invalid">Введите почту</small>
-        <small v-else-if="v$.email.email.$invalid" class="helper-text invalid">Введите корректную почту</small>
+        <small class="helper-text invalid">{{ emailErrorView }}</small>
       </div>
       <div class="input-field">
         <input 
         id="password" 
         type="password" 
         v-model.trim="this.state.password"
+        :class="{invalid: this.passwordError}"
+        @input="this.passwordError = ''"
         autocomplete="off"/>
         <label for="password">Пароль</label>
-        <small v-if="v$.password.$dirty && !v$.password.required" class="helper-text invalid">Введите парол</small>
-        <small v-else-if="v$.password.$dirty && !v$.password.minLength" 
-        class="helper-text invalid">Пароль должен содержать минимум {{ v$.password.minLength.$params.min }} символов</small>
+        <small class="helper-text invalid">{{ passwordErrorView }}</small>
       </div>
     </div>
     <div class="card-action">
@@ -57,7 +57,8 @@ import { computed, reactive } from 'vue'
   export default{
 
     data: () => ({
-      error: '',
+      emailError: '',
+      passwordError: '',
     }),
     setup(){
       const state = reactive({
@@ -81,21 +82,35 @@ import { computed, reactive } from 'vue'
         const result = await this.v$.$validate();
         if(!result){
           if(this.v$.email.required.$invalid){
-            console.log("Email required.")
+            this.emailError = "Введите почту";
           }
           else if(this.v$.email.email.$invalid){
-            console.log("Incorrect email.")
+            this.emailError = "Некорректная почта";
+          } 
+          if(this.v$.password.required.$invalid){
+            this.passwordError = "Введите пароль";
+          }
+          else if(this.v$.password.minLength.$invalid){
+            this.passwordError = `Минимальная количество символов ${this.v$.password.minLength.$params.min}`;
           } 
           return;
         }
-
+        this.$router.push('/');
         // const formData = {
         //   email: this.email,
         //   password: this.password,
         // }
 
-        this.$router.push('/');
       }
+    },
+    computed: {
+      emailErrorView(){
+        return this.emailError;
+      },
+      passwordErrorView(){
+        return this.passwordError;
+      },
+
     }
   }
 
