@@ -69,6 +69,8 @@
   import { useVuelidate } from '@vuelidate/core'
   import { required, email, minLength} from '@vuelidate/validators'
   import { computed, reactive } from 'vue'
+  import { auth } from "@/firebase/init"
+  import { createUserWithEmailAndPassword } from "firebase/auth"
 
   export default{
     
@@ -125,11 +127,14 @@
         }
           this.$router.push('/');
 
-        //   const formData = {
-        //     email: this.state.email,
-        //     password: this.state.password,
-        //     name: this.state.name,
-        // }
+
+        await createUserWithEmailAndPassword(auth, this.state.email, this.state.password)
+          .then(credential => {
+            console.log(credential.user);
+          })
+          .catch(error => {
+            console.log(error.message);
+          })
 
         }
       },

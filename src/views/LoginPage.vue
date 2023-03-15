@@ -47,7 +47,8 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
 import messages from '@/utils/messages'
-
+import { auth } from "@/firebase/init"
+import { signInWithEmailAndPassword } from '@firebase/auth'
 
   export default{
 
@@ -90,12 +91,15 @@ import messages from '@/utils/messages'
           } 
           return;
         }
-        this.$router.push('/');
-        // const formData = {
-          // email: this.state.email,
-          // password: this.state.password,
-        // }
 
+        try{
+          await signInWithEmailAndPassword(auth, this.state.email, this.state.password);
+          this.$router.push('/');
+        }
+        catch(error){
+          this.$router.push("/error400")
+        }
+       
       }
     },
     computed: {

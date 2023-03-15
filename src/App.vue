@@ -20,13 +20,13 @@ export default {
       return `${this.$route.meta.layout}Layout`;
     },
   },
-  provide(){
+  provide() {
     return {
-      message: function(html){
-        M.toast({html})
+      message: function (html) {
+        M.toast({ html })
       },
-      error: function(html){
-        M.toast({html})
+      error: function (html) {
+        M.toast({ html })
       }
     }
   }

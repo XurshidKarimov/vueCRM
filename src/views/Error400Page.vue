@@ -1,0 +1,21 @@
+<template>
+  <div class="wrapper">
+    <img src="@/images/error400.jpg" alt="error400">
+  </div>
+</template>
+
+
+<style scoped>
+  .wrapper{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+  }
+  img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

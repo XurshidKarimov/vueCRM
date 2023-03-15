@@ -72,7 +72,18 @@ const routes = [
       layout: 'main'
     },
     component: () => import("@/views/RecordPage.vue"),
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'error404',
+    component: () => import("@/views/Error404Page.vue"),
+  },
+  {
+    path: '/error400',
+    name: 'error400',
+    component: () => import("@/views/Error400Page.vue"),
   }
+
 ];
 
 const router = createRouter({
