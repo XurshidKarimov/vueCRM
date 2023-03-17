@@ -129,12 +129,7 @@
 
 
         await createUserWithEmailAndPassword(auth, this.state.email, this.state.password)
-          .then(credential => {
-            console.log(credential.user);
-          })
-          .catch(error => {
-            console.log(error.message);
-          })
+          
 
         }
       },

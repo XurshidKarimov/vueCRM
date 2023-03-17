@@ -1,6 +1,8 @@
 <template>
   <div class="wrapper">
-    <img src="@/images/error400.jpg" alt="error400">
+    <div class="imgbox">
+      <img src="@/images/error400.jpg" alt="error400">
+    </div>
   </div>
 </template>
 
@@ -8,8 +10,16 @@
 <style scoped>
   .wrapper{
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     min-height: 100vh;
+  }
+  .imgbox{
+    position: relative;
+    width: 700px;
+    height: 500px;
   }
   img{
     position: absolute;

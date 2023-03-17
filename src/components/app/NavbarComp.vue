@@ -42,6 +42,7 @@
 <script>
   import M from "../../../node_modules/materialize-css/dist/js/materialize";
   import filterDate from "@/filter/filter";
+  import { mapActions } from 'vuex';
 
   export default{
     data: () => ({
@@ -50,7 +51,9 @@
       dropdown: null,
     }),
     methods: {
-      logout(){
+      ...mapActions(['logout']),
+      async logout(){
+        await this.logout();
         this.$router.push('/login?message=logout')
       }
     },
