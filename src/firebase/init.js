@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyDYffiMIc7LlvVZJTK74d72FvA0AycgAuE",
   authDomain: "lunar-temple-362613.firebaseapp.com",

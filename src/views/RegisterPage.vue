@@ -69,8 +69,7 @@
   import { useVuelidate } from '@vuelidate/core'
   import { required, email, minLength} from '@vuelidate/validators'
   import { computed, reactive } from 'vue'
-  import { auth } from "@/firebase/init"
-  import { createUserWithEmailAndPassword } from "firebase/auth"
+  import { mapActions } from 'vuex'
 
   export default{
     
@@ -103,6 +102,7 @@
       return {state, v$}
     },
     methods: {
+      ...mapActions(['register', 'getUID']),
       async checkFormData(){
         const result = await this.v$.$validate();
 
@@ -122,15 +122,21 @@
           if(this.v$.name.required.$invalid){
             this.nameError = "Введите имя";
           }
-
           return;
-        }
-          this.$router.push('/');
-
-
-        await createUserWithEmailAndPassword(auth, this.state.email, this.state.password)
+        }          
+          const sendObj = {
+            email: this.state.email,
+            password: this.state.password,
+            name: this.state.name,
+          };
+          try{
+            await this.register(sendObj);
+            this.$router.push('/')
+          }
+          catch(e){
+            console.log(e);
+          }
           
-
         }
       },
     computed: {

@@ -51,10 +51,10 @@
       dropdown: null,
     }),
     methods: {
-      ...mapActions(['logout']),
+      ...mapActions(['logingout']),
       async logout(){
-        await this.logout();
         this.$router.push('/login?message=logout')
+        // await this.logingout();
       }
     },
     computed:{
