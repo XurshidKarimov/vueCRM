@@ -1,8 +1,9 @@
-import { db } from "@/firebase/init"
 import { auth } from "@/firebase/init"
 import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from '@firebase/auth'
 import router from "@/router"
-import { ref } from "vue"
+import { getDatabase, ref, set } from "firebase/database";
+
+
 
 export default{
   actions: {
@@ -19,7 +20,8 @@ export default{
       try{
         await createUserWithEmailAndPassword(auth, email, password, name);
         const uid = await dispatch("getUID");
-        await ref(db, `users/${uid}/info`).set({
+        const db = getDatabase();
+        set(ref(db, `users/${uid}/info`), {
           bill: 10000,
           name,
         })
