@@ -13,10 +13,9 @@ export default{
       }
       catch(e){
         commit('setError', e);
-        // console.log(e.code);
       }
     },
-    async register({dispatch}, {email, password, name}){
+    async register({dispatch, commit}, {email, password, name}){
       try{
         await createUserWithEmailAndPassword(auth, email, password, name);
         const uid = await dispatch("getUID");
@@ -28,7 +27,7 @@ export default{
         router.push('/');
       }
       catch(e){
-        console.log(e);
+        commit('setError', e);
       }
     },
     getUID(){

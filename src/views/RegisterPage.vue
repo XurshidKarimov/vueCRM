@@ -128,13 +128,8 @@
             password: this.state.password,
             name: this.state.name,
           };
-          try{
+         
             await this.register(sendObj);
-            this.$router.push('/')
-          }
-          catch(e){
-            console.log(e);
-          }
           
         }
       },
