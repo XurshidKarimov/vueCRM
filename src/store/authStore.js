@@ -4,16 +4,16 @@ import router from "@/router"
 import { getDatabase, ref, set } from "firebase/database";
 
 
-
 export default{
   actions: {
-    async login(context, {email, password}){
+    async login({commit}, {email, password}){
       try{
         await signInWithEmailAndPassword(auth, email, password);
         router.push('/');
       }
       catch(e){
-        router.push("/error400");
+        commit('setError', e);
+        // console.log(e.code);
       }
     },
     async register({dispatch}, {email, password, name}){

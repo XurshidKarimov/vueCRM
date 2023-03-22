@@ -96,9 +96,9 @@ import { mapActions } from 'vuex'
           email: this.state.email,
           password: this.state.password
         }
-
+        
         await this.login(sendObj);
-
+       
       }
     },
     computed: {

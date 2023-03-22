@@ -42,7 +42,6 @@
         <input type="checkbox" @change="state.agree = !state.agree" />
         <span>С правилами согласен</span>
       </label>
-      <!-- <small class="helper-text invalid">{{ agreeErrorView }}</small> -->
     </p>
   </div>
   <div class="card-action">
