@@ -20,14 +20,20 @@
 <script>
   import NavbarComp from "@/components/app/NavbarComp"
   import SidebarComp from "@/components/app/SidebarComp"
+  import { mapActions } from "vuex";
 
   export default{
     data: () => ({
       isOpen: true,
     }),
-
     components: {
       NavbarComp, SidebarComp
-    }
+    },
+    methods:{
+      ...mapActions(['fetchInfo']),
+    },
+    async mounted(){
+      await this.fetchInfo();
+    },
   }
 </script>

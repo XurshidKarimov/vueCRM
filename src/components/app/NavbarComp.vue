@@ -16,7 +16,7 @@
               data-target="dropdown"
               ref="dropdown"
             >
-              USER NAME
+              {{getInfo.name}}
               <i class="material-icons right">arrow_drop_down</i>
             </a>
 
@@ -42,9 +42,10 @@
 <script>
   import M from "../../../node_modules/materialize-css/dist/js/materialize";
   import filterDate from "@/filter/filter";
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
 
   export default{
+
     data: () => ({
       date: new Date(),
       interval: null,
@@ -54,13 +55,13 @@
       ...mapActions(['logingout']),
       async logout(){
         this.$router.push('/login?message=logout')
-        // await this.logingout();
       }
     },
     computed:{
       currentTime(){
         return filterDate(this.date, 'datetime');
-      }
+      },
+      ...mapGetters(['getInfo']),
     },
     mounted(){
       this.interval = setInterval(() => {

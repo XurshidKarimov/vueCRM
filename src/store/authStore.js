@@ -34,8 +34,9 @@ export default{
       const user = auth.currentUser;
       return user ? user.uid : null
     },
-    async logingout(){
+    async logingout({commit}){
       await signOut();
+      commit('clearInfo');
     }
   }
 }
