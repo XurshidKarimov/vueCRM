@@ -32,7 +32,7 @@ export default createStore({
         headers: myHeaders,
       }
 
-      const result = await fetch(`https://api.apilayer.com/fixer/latest?symbols=USD,UZS,RUB`, requestOptions);
+      const result = await fetch(`https://api.apilayer.com/fixer/latest?symbols=USD,UZS,RUB,EUR`, requestOptions);
       return await result.json();
     }
   },
