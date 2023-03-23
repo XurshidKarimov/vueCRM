@@ -32,7 +32,7 @@
     methods:{
       ...mapActions(['fetchInfo']),
     },
-    async mounted(){
+    async beforeMount(){
       await this.fetchInfo();
     },
   }

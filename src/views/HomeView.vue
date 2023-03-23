@@ -8,10 +8,9 @@
       </button>
     </div>
     
-    <loader-l/>
-
-    <div class="row">
-      <HomeBill/>
+    <loader-l v-if="loading"/>
+    <div v-else class="row">
+      <HomeBill :rates="currency.rates"/>
       <HomeCurreny/>
     </div>
     
@@ -21,12 +20,26 @@
 <script>
 import HomeBill from '@/components/app/HomeBill.vue';
 import HomeCurreny from '@/components/app/HomeCurreny.vue';
+import { mapActions } from 'vuex';
 
 export default{
+  data(){
+    return {
+      loading: true,
+      currency: null,
+    }
+  },
+  methods: {
+    ...mapActions(['fetchCurrency'])
+  },
   components: {
     HomeBill, HomeCurreny,
   },
-  inject: ['loader'],
+  async mounted(){
+    this.currency = await this.fetchCurrency();
+    console.log(this.currency);
+    this.loading = false;
+  }
 }
 
 </script>

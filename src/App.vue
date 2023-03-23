@@ -8,7 +8,6 @@
 import EmptyLayout from "@/layout/EmptyLayout";
 import MainLayout from "@/layout/MainLayout";
 import M from "../node_modules/materialize-css";
-import LoaderL from "@/components/app/LoaderL.vue"
 
 
 export default {
@@ -29,9 +28,6 @@ export default {
       error: function (html) {
         M.toast({ html })
       },
-      loader: function(){
-        return LoaderL;
-      }
     }
   }
 };

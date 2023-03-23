@@ -16,7 +16,7 @@
               data-target="dropdown"
               ref="dropdown"
             >
-              {{getInfo.name}}
+              {{userName}}
               <i class="material-icons right">arrow_drop_down</i>
             </a>
 
@@ -34,6 +34,7 @@
               </li>
             </ul>
           </li>
+
         </ul>
       </div>
     </nav>
@@ -50,6 +51,7 @@
       date: new Date(),
       interval: null,
       dropdown: null,
+      userName: '',
     }),
     methods: {
       ...mapActions(['logingout']),
@@ -62,6 +64,14 @@
         return filterDate(this.date, 'datetime');
       },
       ...mapGetters(['getInfo']),
+    },
+    watch: {
+      getInfo: {
+        handler(newArg){
+          console.log(newArg)
+          this.userName = newArg.name
+        }
+      }
     },
     mounted(){
       this.interval = setInterval(() => {

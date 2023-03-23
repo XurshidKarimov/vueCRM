@@ -10,3 +10,9 @@
     </div>
   </div>
 </template>
+
+<script >
+  export default{
+    props: ['rates']
+  }
+</script>

@@ -4,7 +4,9 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import "materialize-css/dist/js/materialize.min";
+import LoaderL from "@/components/app/LoaderL.vue"
 
 
-createApp(App).use(router).use(store).mount("#app");
-
+const app = createApp(App);
+app.component("LoaderL", LoaderL)
+    .use(router).use(store).mount("#app");
