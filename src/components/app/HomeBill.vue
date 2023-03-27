@@ -3,7 +3,8 @@
     <div class="card light-blue bill-card">
       <div class="card-content white-text">
         <span class="card-title">Счет в валюте</span>
-        <p  v-for="curr in currencies"
+        <p>{{ this.userBill }}</p>
+        <p v-for="curr in currencies"
         :key="curr"
         class="currency-line"
         >
@@ -17,23 +18,24 @@
 </template>
 
 <script >
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default{
   data(){
     return {
       currencies: ['UZS', 'USD', 'EUR', 'RUB'],
+      userBill: '',
     }
   },
   props: ['rates'],
   computed: {
-    ...mapGetters(['getInfo']),
+    ...mapGetters(['getInfo', 'getUserUID']),
     base(){
       return this.getInfo.bill / (this.rates['UZS'] / this.rates['EUR'])
     },
-    
   },
   methods: {
+    ...mapActions(['fetchInfo']),
     getCurrency(currency){
       return (this.base * this.rates[currency]).toFixed(2);
     },
@@ -43,6 +45,10 @@ export default{
         currency,
       }).format(value)
     },
+  },
+  async mounted(){
+    await this.fetchInfo(this.getUserUID);
+    this.userBill = `${this.getInfo.bill} UZS`;
   }
 }
 </script>

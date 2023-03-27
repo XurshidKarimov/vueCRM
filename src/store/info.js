@@ -1,32 +1,37 @@
-import { getDatabase, ref, get, child} from "firebase/database";
-
+import { child, getDatabase, ref, get} from "firebase/database";
 
 export default{
     state: {
         info: {
 
-        }
+        },
+        userUID: '',
     },
     mutations: {
         setInfo(state, info){
             state.info = info;
         },
+        setUID(state, info){
+            state.userUID = info;
+        },
         clearInfo(state){
             state.info = {};
         }
-    },  
+    },
     actions: {
-        async fetchInfo({dispatch, commit}){
-            const uid = await dispatch('getUID');
-            const dbRef = ref(getDatabase());
-            get(child(dbRef, `/users/${uid}/info`)).then(snapshot => {
-                commit('setInfo', snapshot.val());
-            })
+        async fetchInfo({commit}, payload){
+            const db = getDatabase();
+            const dbRef = ref(db);
+            let result = await get(child(dbRef, `/users/${payload}/info`));
+            commit('setInfo', result.val());          
         }
     },
     getters: {
         getInfo(state){
             return state.info;
+        },
+        getUserUID(state){
+            return state.userUID;
         }
     }
 }

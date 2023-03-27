@@ -30,10 +30,11 @@
       NavbarComp, SidebarComp
     },
     methods:{
-      ...mapActions(['fetchInfo']),
+      ...mapActions(['fetchInfo', 'getUID']),
     },
-    async beforeMount(){
-      await this.fetchInfo();
+    async mounted(){
+      await this.getUID();
     },
+    
   }
 </script>

@@ -59,21 +59,21 @@
         this.$router.push('/login?message=logout')
       }
     },
+    watch:{
+      userName: {
+        handler(newVal){
+          this.userName = newVal;
+        }
+      }
+    },
     computed:{
       currentTime(){
         return filterDate(this.date, 'datetime');
       },
       ...mapGetters(['getInfo']),
     },
-    watch: {
-      getInfo: {
-        handler(newArg){
-          console.log(newArg)
-          this.userName = newArg.name
-        }
-      }
-    },
     mounted(){
+      this.userName = localStorage.getItem("userName");
       this.interval = setInterval(() => {
         this.date = new Date();
       }, 1000)
@@ -84,7 +84,7 @@
     beforeUnmount(){
       clearInterval(this.interval);
       if(this.dropdown && this.dropdown.destroy){
-        this.dropdown.destroy()
+        this.dropdown.destroy();
       }
     }
   }

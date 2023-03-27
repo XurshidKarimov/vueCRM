@@ -1,5 +1,5 @@
 import { auth } from "@/firebase/init"
-import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from '@firebase/auth'
+import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from '@firebase/auth'
 import router from "@/router"
 import { getDatabase, ref, set } from "firebase/database";
 
@@ -30,9 +30,15 @@ export default{
         commit('setError', e);
       }
     },
-    getUID(){
-      const user = auth.currentUser;
-      return user ? user.uid : null
+    async getUID({commit}){
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if(user){
+          const userUID = user.uid;
+          commit('setUID', userUID);
+        }
+      })
+      
     },
     async logingout({commit}){
       await signOut();

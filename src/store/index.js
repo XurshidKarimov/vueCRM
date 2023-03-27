@@ -5,9 +5,6 @@ import info from "./info";
 
 export default createStore({
   namespaced: true,
-  state: {
-    error: null,
-  },
   getters: {
     getError(state){
       return state.error;
@@ -31,8 +28,8 @@ export default createStore({
         redirect: "follow",
         headers: myHeaders,
       }
-
-      const result = await fetch(`https://api.apilayer.com/fixer/latest?symbols=USD,UZS,RUB,EUR`, requestOptions);
+  
+      const result = await fetch(`https://api.apilayer.com/exchangerates_data/latest?symbols=UZS&base=EUR`, requestOptions);
       return await result.json();
     }
   },
