@@ -4,12 +4,12 @@
       <div class="card-content white-text">
         <span class="card-title">Счет в валюте</span>
         <p>{{ this.userBill }}</p>
-        <p v-for="curr in currencies"
+        <p v-for="curr in this.rates"
         :key="curr"
         class="currency-line"
         >
         <span>
-         {{ currencyFilter(this.rates[curr], curr) }}
+         {{ currencyFilter(getCurrency(this.getInfo.bill, curr.rates['UZS']), curr.base) }}
         </span>
       </p>
     </div>
@@ -23,21 +23,17 @@ import { mapGetters, mapActions } from 'vuex'
 export default{
   data(){
     return {
-      currencies: ['UZS', 'USD', 'EUR', 'RUB'],
       userBill: '',
     }
   },
   props: ['rates'],
   computed: {
     ...mapGetters(['getInfo', 'getUserUID']),
-    base(){
-      return this.getInfo.bill / (this.rates['UZS'] / this.rates['EUR'])
-    },
   },
   methods: {
     ...mapActions(['fetchInfo']),
-    getCurrency(currency){
-      return (this.base * this.rates[currency]).toFixed(2);
+    getCurrency(userBill, foreignCurrency){
+      return userBill / foreignCurrency.toFixed(2);
     },
     currencyFilter(value, currency = 'UZS'){
       return new Intl.NumberFormat('ru-RU', {

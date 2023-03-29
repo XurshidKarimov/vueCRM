@@ -29,8 +29,15 @@ export default createStore({
         headers: myHeaders,
       }
   
-      const result = await fetch(`https://api.apilayer.com/exchangerates_data/latest?symbols=UZS&base=EUR`, requestOptions);
-      return await result.json();
+      const resultEUR = await fetch(`https://api.apilayer.com/exchangerates_data/latest?symbols=UZS&base=EUR`, requestOptions),
+            resultUSD = await fetch(`https://api.apilayer.com/exchangerates_data/latest?symbols=UZS&base=USD`, requestOptions),
+            resultRUB = await fetch(`https://api.apilayer.com/exchangerates_data/latest?symbols=UZS&base=RUB`, requestOptions);
+
+      const jsonEUR = await resultEUR.json(),
+            jsonUSD = await resultUSD.json(),
+            jsonRUB = await resultRUB.json();
+            
+      return [jsonEUR, jsonUSD, jsonRUB];
     }
   },
   modules: {

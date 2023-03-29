@@ -14,10 +14,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>руб</td>
-              <td>12121</td>
-              <td>12.12.12</td>
+            <tr v-for="currency in rates" :key="currency">
+              <td>{{ currency.base }}</td>
+              <td>{{ currency.rates['UZS'].toFixed(2) }}</td>
+              <td>{{ today }}</td>
             </tr>
             </tbody>
           </table>
@@ -25,3 +25,21 @@
       </div>
     </div>
 </template>
+
+<script>
+  export default{
+    props: ['rates'],
+    computed: {
+      today(){
+        const options = {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }
+
+        return new Intl.DateTimeFormat('ru-Ru', options).format(new Date());
+      }
+    }
+  }
+
+</script>
