@@ -20,7 +20,7 @@
 <script>
   import NavbarComp from "@/components/app/NavbarComp"
   import SidebarComp from "@/components/app/SidebarComp"
-  import { mapActions } from "vuex";
+  import { mapActions, mapGetters } from "vuex";
 
   export default{
     data: () => ({
@@ -32,9 +32,12 @@
     methods:{
       ...mapActions(['fetchInfo', 'getUID']),
     },
-    async mounted(){
+    computed: {
+    ...mapGetters(['getUserUID']),
+  },
+  async mounted(){
       await this.getUID();
-    },
+    }
     
   }
 </script>

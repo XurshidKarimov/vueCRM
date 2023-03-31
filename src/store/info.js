@@ -6,6 +6,7 @@ export default{
 
         },
         userUID: '',
+        userDataStatus: true,
     },
     mutations: {
         setInfo(state, info){
@@ -16,6 +17,9 @@ export default{
         },
         clearInfo(state){
             state.info = {};
+        },
+        setUserDataStatus(state){
+            state.userDataStatus = !state.userDataStatus;
         }
     },
     actions: {
@@ -23,8 +27,9 @@ export default{
             const db = getDatabase();
             const dbRef = ref(db);
             let result = await get(child(dbRef, `/users/${payload}/info`));
-            commit('setInfo', result.val());          
-        }
+            commit('setInfo', result.val());
+            commit('setUserDataStatus');
+        },
     },
     getters: {
         getInfo(state){
@@ -32,6 +37,9 @@ export default{
         },
         getUserUID(state){
             return state.userUID;
+        },
+        getUserDataStatus(state){
+            return state.userDataStatus;
         }
     }
 }
