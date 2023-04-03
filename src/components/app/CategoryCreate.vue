@@ -96,6 +96,12 @@ import M from "../../../node_modules/materialize-css";
                 });
 
                 console.log(category);
+
+                this.state.name = '';
+                this.state.limit = 1000;
+                
+                let nameInput = document.getElementById("name");
+                nameInput.focus();
             }
             catch(e){
                 // null
