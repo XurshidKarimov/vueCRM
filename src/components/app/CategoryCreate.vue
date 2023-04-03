@@ -22,7 +22,7 @@
                 <input id="limit" 
                     type="number" 
                     autocomplete="off"
-                    v-model.trim="state.limit"
+                    v-model.number="state.limit"
                     :class="{invalid: this.limitError}"
                     @input="this.limitError = ''"
                     />
@@ -43,7 +43,9 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required, minValue} from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
-    
+import { mapActions, mapGetters } from 'vuex';
+import M from "../../../node_modules/materialize-css";
+
     export default{
        data: () => ({
             nameError: '',
@@ -53,7 +55,7 @@ import { computed, reactive } from 'vue'
        setup(){
             const state = reactive({
                 name: '',
-                limit: '',
+                limit: 1000,
             })
 
             const rules = computed(() => {
@@ -69,6 +71,7 @@ import { computed, reactive } from 'vue'
        },
 
        methods: {
+        ...mapActions(['createCategory']),
         async checkFormData(){
             const result = await this.v$.$validate();
             
@@ -84,20 +87,34 @@ import { computed, reactive } from 'vue'
                 }
                 return;
             }
-            else{
-                this.nameError = '';
-                this.limitError = '';
+
+            try{
+                const category = await this.createCategory({
+                    name: this.state.name,
+                    limit: this.state.limit,
+                    userUID: this.getUserUID,
+                });
+
+                console.log(category);
+            }
+            catch(e){
+                // null
             }
         }
        },
 
        computed: {
+        ...mapGetters(['getUserUID']),
         nameErrorView(){
             return this.nameError;
         },
         limitErrorView(){
             return this.limitError;
         },
+       },
+
+       mounted(){
+        M.updateTextFields();
        }
     }
 

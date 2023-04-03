@@ -1,7 +1,7 @@
 import { createStore,  } from "vuex";
 import authStore from "./authStore";
 import info from "./info";
-
+import category from "./category"
 
 export default createStore({
   namespaced: true,
@@ -41,6 +41,6 @@ export default createStore({
     }
   },
   modules: {
-   authStore, info
+   authStore, info, category
   }
 });
