@@ -94,12 +94,14 @@ import M from "../../../node_modules/materialize-css";
                     limit: this.state.limit,
                     userUID: this.getUserUID,
                 });
-
-                console.log(category);
-
+                
                 this.state.name = '';
                 this.state.limit = 1000;
                 
+                this.message('Категория успешно создана');
+
+                this.$emit('created', category);
+
                 let nameInput = document.getElementById("name");
                 nameInput.focus();
             }
@@ -118,7 +120,7 @@ import M from "../../../node_modules/materialize-css";
             return this.limitError;
         },
        },
-
+       inject: ['message'],
        mounted(){
         M.updateTextFields();
        }

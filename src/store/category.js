@@ -27,6 +27,9 @@ export default{
                 commit('setError', e);
                 throw e;
             }
-        }
+        },
+        async fetchCategories(){
+            
+        },
     }
 }

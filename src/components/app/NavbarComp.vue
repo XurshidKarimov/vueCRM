@@ -16,7 +16,7 @@
               data-target="dropdown"
               ref="dropdown"
             >
-              {{userName}}
+              {{this.state.name}}
               <i class="material-icons right">arrow_drop_down</i>
             </a>
 
@@ -43,15 +43,31 @@
 <script>
   import M from "../../../node_modules/materialize-css/dist/js/materialize";
   import filterDate from "@/filter/filter";
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions, mapGetters, useStore } from 'vuex';
+  import { computed, reactive, watch } from 'vue';
+
 
   export default{
+    setup(){
 
+    const state = reactive({
+      name: '',
+    })
+
+    const store = useStore();
+
+    const checkUserName = computed(() => store.getters.getInfo);
+
+    watch(checkUserName, async (newValue) => {
+      state.name = newValue.name;
+    })
+
+    return {state};
+  },
     data: () => ({
       date: new Date(),
       interval: null,
       dropdown: null,
-      userName: '',
     }),
     methods: {
       ...mapActions(['logingout']),
@@ -73,7 +89,6 @@
       ...mapGetters(['getInfo']),
     },
     mounted(){
-      this.userName = localStorage.getItem("userName");
       this.interval = setInterval(() => {
         this.date = new Date();
       }, 1000)

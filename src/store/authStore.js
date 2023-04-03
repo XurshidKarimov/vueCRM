@@ -32,9 +32,11 @@ export default{
     },
     async getUID({commit}){
       const auth = getAuth();
+      // const currentUser = auth.currentUser;
       onAuthStateChanged(auth, (user) => {
         if(user){
           const userUID = user.uid;
+          console.log(auth, userUID);
           commit('setUID', userUID);
         }
       })
@@ -43,6 +45,6 @@ export default{
     async logingout({commit}){
       await signOut();
       commit('clearInfo');
-    }
+    },
   }
 }
