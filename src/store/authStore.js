@@ -15,16 +15,15 @@ export default{
         commit('setError', e);
       }
     },
-    async register({dispatch, commit}, {email, password, name}){
+    async register({commit, getters}, {email, password, name}){
       try{
         await createUserWithEmailAndPassword(auth, email, password, name);
-        const uid = await dispatch("getUID");
         const db = getDatabase();
-        set(ref(db, `users/${uid}/info`), {
+        set(ref(db, `users/${getters.getUserUID}/info`), {
           bill: 10000,
           name,
         })
-        router.push('/');
+        router.push('/login');
       }
       catch(e){
         commit('setError', e);
@@ -32,11 +31,9 @@ export default{
     },
     async getUID({commit}){
       const auth = getAuth();
-      // const currentUser = auth.currentUser;
       onAuthStateChanged(auth, (user) => {
         if(user){
           const userUID = user.uid;
-          console.log(auth, userUID);
           commit('setUID', userUID);
         }
       })
