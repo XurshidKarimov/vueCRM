@@ -1,6 +1,14 @@
-import { getDatabase, ref, child, push, update } from "firebase/database";
+import { getDatabase, ref, child, push, update, get } from "firebase/database";
 
 export default{
+    state: {
+        categories: null,
+    },
+    mutations: {
+        setCategory(state, payload){
+            state.categories = payload;
+        }
+    },
     actions: {
         async createCategory({commit}, payload){
             try{
@@ -28,8 +36,18 @@ export default{
                 throw e;
             }
         },
-        async fetchCategories(){
+        async fetchCategories(context, payload){
+            const dbRef = ref(getDatabase());
+            const request = await get(child(dbRef, `users/${payload}/categories`));
             
+            const data = request.val();
+            const resultData = Object.keys(data).map(key => ({...data[key], id: key}));
+            context.commit("setCategory", resultData);
         },
+    },
+    getters: {
+        getCategories(state){
+            return state.categories;
+        }
     }
 }

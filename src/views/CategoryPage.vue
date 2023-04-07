@@ -4,7 +4,7 @@
       <h3>Категории</h3>
     </div>
     <section>
-      <loader-l v-if="loading"/>
+      <loader-l v-if="!userUID"/>
       <div class="row" v-else>
       <CategoryCreate @created="addNewCategory"/>
       <CategoryEdit/>
@@ -16,9 +16,23 @@
 <script>
   import CategoryCreate from "@/components/app/CategoryCreate.vue"
   import CategoryEdit from "@/components/app/CategoryEdit.vue"
-  import { mapActions, mapGetters } from "vuex";
+  import { mapActions, mapGetters, useStore } from "vuex";
+  import { computed, watch, } from 'vue';
 
   export default{
+    setup(){
+      const store = useStore();
+    
+      const userUID = computed(() => store.getters.getUserUID);
+      
+      watch(userUID, async(newValue) => {
+       await store.dispatch('fetchCategories', newValue);
+      })
+      
+      return {userUID, };
+    },
+
+
     data: () => ({
       categories: [],
       loading: true,
@@ -36,11 +50,6 @@
     computed: {
       ...mapGetters(['getUserUID'])
     },
-    async mounted(){
-      console.log(this.getUserUID);
-      this.categories = await this.fetchCategories(this.getUserUID);
-      this.loading = false;
-    }
   }
 
 </script>
